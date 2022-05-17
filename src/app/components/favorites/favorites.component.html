@@ -1,0 +1,13 @@
+<div class="header">
+  <h1 class="header__title">Избранное</h1>
+  <button routerLink="/" class="header__button">На главную</button>
+</div>
+<ng-container *ngIf="search">
+  <app-restaurants (eventClickToRest)="showRest($event)" [isAsync]="false" [data]="restaurants">
+  </app-restaurants>
+</ng-container>
+<ng-container *ngIf="showCurrentRest">
+  <app-popup [currentRest]="currentRest" (clickClose)="close()"></app-popup>
+</ng-container>
+
+

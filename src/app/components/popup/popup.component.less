@@ -1,0 +1,122 @@
+.popup{
+  position: fixed;
+  width:100%;
+  height:100%;
+  top:0px;
+  margin: 0 0 0 -8px;
+  background-color: rgba(0,0,0,0.5);
+  overflow: auto;
+  &__favourites, &__favourites-yellow{
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
+    margin-right: 30px;
+    background-size: contain;
+  }
+  &__favourites{
+    background-image: url("../../../assets/star.png");
+  }
+  &__favourites-yellow{
+    background-image: url("../../../assets/starYellow.png");
+  }
+  &__restaurant{
+    padding: 15px;
+    width: 600px;
+    overflow: auto;
+    min-height: 510px;
+    background-color: white;
+    margin: 70px auto 0;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  }
+  &__photo{
+    width: 400px;
+    height: 220px;
+    margin-right: 10px;
+    border-radius: 20px;
+    float: left;
+  }
+  &__menu{
+    display: block;
+    float: left;
+  }
+  &__title-menu{
+    font-family: arial;
+    font-size: 18px;
+    display: block;
+    margin: 15px 0 5px;
+  }
+  &__table{
+    display: block;
+    height: 200px;
+    width: 100%;
+    margin: 0 auto;
+    overflow-x: auto;
+    border-collapse: collapse;
+    tr:first-child{
+      padding: 0px;
+    }
+    tr:nth-child(2n) {
+      background: #74EBD5;
+    }
+    tr{
+      font-family: sans-serif;
+    }
+    td{
+      padding: 5px;
+    }
+  }
+  &__td1{
+    width: 45%;
+    text-align: left;
+  }
+  &__td2{
+    width: 10%;
+    text-align: center;
+  }
+  &__td3{
+    width: 45%;
+    text-align: center;
+  }
+  h2{
+    font-family: 'Roboto Slab', serif;
+    margin-top: 0;
+  }
+  &__close{
+    position: relative;
+    float: right;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  &__close:hover{
+    background-color: #c2c2c2;
+    cursor: pointer;
+  }
+  @media(max-width: 646px){
+    &__photo{
+      float: none;
+      width: 250px;
+      height: 150px;
+    }
+    &__restaurant{
+      margin-top: 20px;
+      width: 80%;
+    }
+  }
+}
+
+#element::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f9f9fd;
+}
+
+#element::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #74EBD5;
+}
+
+#element::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  background-color: #f9f9fd;
+}

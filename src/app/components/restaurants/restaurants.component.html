@@ -1,0 +1,27 @@
+<ng-template #info let-item="item">
+  <div class="restaurant__title">
+    <h2 class="restaurant__name">{{item.name}}</h2>
+    <ng-container [ngSwitch]="checkFavorites(item.Id)">
+      <div *ngSwitchCase="false" (click)="clickFavourites($event, item.Id)" class="restaurant__favourites"></div>
+      <div *ngSwitchCase="true" (click)="clickFavourites($event, item.Id)" class="restaurant__favourites-yellow"></div>
+    </ng-container>
+  </div>
+  <div class="restaurant__info">
+    <img [src]="'../assets/'+item.name+'.jpeg'" class="restaurant__photo"/>
+    <p class="restaurant__desc">{{item.description}} <br/> <br/>
+      <i>адрес: </i>{{item.address}}</p>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="isAsync">
+  <div (click)="clickToRest(item)" class="restaurant" *ngFor="let item of data$ | async">
+    <template [ngTemplateOutlet]="info" [ngTemplateOutletContext]="{item: item}"></template>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!isAsync">
+  <div (click)="clickToRest(item)" class="restaurant" *ngFor="let item of data">
+    <template [ngTemplateOutlet]="info" [ngTemplateOutletContext]="{item: item}"></template>
+  </div>
+</ng-container>
+

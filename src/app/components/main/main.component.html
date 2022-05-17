@@ -1,0 +1,22 @@
+<div class="header">
+  <h1 class="header__title">Поиск ресторана</h1>
+  <button routerLink="./favorites" class="header__button">Избранное</button>
+</div>
+
+<div [formGroup]="form" class="search">
+  <input formControlName="field" type="text" placeholder="Введите блюдо (напр.: бургер)" />
+  <button (click)="search()">🔎</button>
+</div>
+
+<p class="feedback" *ngIf="notFound">Ничего не найдено</p>
+
+<ng-container *ngIf="!notFound">
+  <app-restaurants [isAsync]="true" [data$]="data" (eventClickToRest)="showRest($event)">
+  </app-restaurants>
+</ng-container>
+
+<ng-container *ngIf="showCurrentRest">
+  <app-popup [isFavorites]="currentRest && favoritesRestaurantsService.getRestaurants().includes(currentRest.Id)"
+             [currentRest]="currentRest" (clickClose)="close()"></app-popup>
+</ng-container>
+

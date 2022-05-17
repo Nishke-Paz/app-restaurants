@@ -1,9 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map, Observable, Subject, takeUntil} from "rxjs";
+import {map, Observable, takeUntil} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ServerService} from "./server.service";
+import {ServerService} from "../../services/server.service";
+import {RxUnsubscribeComponent} from "../rx-unsubscribe";
+import {FavoritesRestaurantsService} from "../../services/favorites-restaurants.service";
 
 export interface Restaurant {
   Id: number;
@@ -21,40 +23,40 @@ export interface Menu {
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.less'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class MainComponent extends RxUnsubscribeComponent implements OnInit{
   notFound: boolean = false;
   currentRest?: Restaurant;
   showCurrentRest: boolean = false;
-  varForUnsubscribe: Subject<any> = new Subject<any>();
   form = new FormGroup({
     field: new FormControl('', [
       Validators.required,
       Validators.min(2),
       Validators.pattern(/^[а-яА-ЯёЁ ]+$/)]),
   })
-  data?: Observable<any>;
+  data?: Observable<Restaurant[]>;
   constructor(
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private server: ServerService) {
-  }
-  ngOnDestroy(){
-    this.varForUnsubscribe.next("");
-    this.varForUnsubscribe.complete();
+    private server: ServerService,
+    private changeDetectorRef: ChangeDetectorRef,
+    public favoritesRestaurantsService: FavoritesRestaurantsService) {
+    super();
   }
   ngOnInit(){
-    this.activatedRoute.queryParams.pipe(takeUntil(this.varForUnsubscribe)).subscribe(data => {
+    this.activatedRoute.queryParams.pipe(takeUntil(this.destroy$)).subscribe(data => {
       if (data["id"]){
         this.server.getRestById({ id: data["id"] })
-          .pipe(takeUntil(this.varForUnsubscribe))
+          .pipe(takeUntil(this.destroy$))
           .subscribe((data: Restaurant) => {
             if (JSON.stringify(data) !== JSON.stringify({})){
               this.currentRest = data;
               this.showCurrentRest = true;
+              this.changeDetectorRef.markForCheck();
             } else {
               this.router.navigate(["/"]);
             }
@@ -76,7 +78,6 @@ export class AppComponent implements OnInit, OnDestroy{
       }));
     }
   }
-
   showRest(data: Restaurant): void{
     this.currentRest = data;
     this.router.navigate(["/"], { queryParams: { id: data.Id } });
@@ -87,17 +88,4 @@ export class AppComponent implements OnInit, OnDestroy{
     this.showCurrentRest = false;
     this.router.navigate(["/"])
   }
-
-  // getLs(id: number): void{
-  //   let lsId = localStorage.getItem("restId");
-  //   if (lsId !== null){
-  //     let arrayId = JSON.parse(lsId)
-  //     arrayId.push(id);
-  //     localStorage.setItem("restId", JSON.stringify(arrayId));
-  //   } else {
-  //     let arrayId = [id];
-  //     localStorage.setItem("restId", JSON.stringify(arrayId));
-  //   }
-  //   console.log(localStorage.getItem("restId"));
-  // }
 }
