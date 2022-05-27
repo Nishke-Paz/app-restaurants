@@ -10,26 +10,28 @@ import {FavoritesRestaurantsService} from "../../services/favorites-restaurants.
   selector: 'app-favorites',
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.less'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FavoritesComponent extends RxUnsubscribeComponent implements OnInit{
   public restaurants: Restaurant[] = [];
   currentRest?: Restaurant;
   showCurrentRest: boolean = false;
   search = false;
+  launchDetectionStrategy: Object = new Object;
   constructor(
     private service: ServerService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private server: ServerService,
     private changeDetectorRef: ChangeDetectorRef,
-    private favoritesRestaurantsService: FavoritesRestaurantsService
+    public favoritesRestaurantsService: FavoritesRestaurantsService
   ) {
     super();
   }
   close(): void{
     this.showCurrentRest = false;
-    this.router.navigate(["/favorites"])
+    this.router.navigate(["/favorites"]);
+    this.launchDetectionStrategy = new Object;
   }
   showRest(data: Restaurant): void{
     this.currentRest = data;

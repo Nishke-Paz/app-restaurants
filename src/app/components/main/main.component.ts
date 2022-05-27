@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map, Observable, takeUntil} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -25,12 +25,13 @@ export interface Menu {
   selector: 'app-root',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent extends RxUnsubscribeComponent implements OnInit{
   notFound: boolean = false;
   currentRest?: Restaurant;
   showCurrentRest: boolean = false;
+  launchDetectionStrategy: Object = new Object;
   form = new FormGroup({
     field: new FormControl('', [
       Validators.required,
@@ -86,6 +87,7 @@ export class MainComponent extends RxUnsubscribeComponent implements OnInit{
 
   close(): void{
     this.showCurrentRest = false;
-    this.router.navigate(["/"])
+    this.router.navigate(["/"]);
+    this.launchDetectionStrategy = new Object;
   }
 }

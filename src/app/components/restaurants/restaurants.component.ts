@@ -13,15 +13,15 @@ export class RestaurantsComponent {
   @Input() data$?: Observable<Restaurant[]>;
   @Input() data?: Restaurant[];
   @Input() isAsync?: boolean;
+  @Input() launchDetectionStrategy?: Object;
   @Output() eventClickToRest: EventEmitter<Restaurant> = new EventEmitter<Restaurant>();
 
-  constructor(
-    private favoritesRestaurantsService: FavoritesRestaurantsService,
-    private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private favoritesRestaurantsService: FavoritesRestaurantsService) {
   }
   clickToRest(restaurant: Restaurant){
     this.eventClickToRest.emit(restaurant);
   }
+
   checkFavorites(id: number): boolean{
     return this.favoritesRestaurantsService.getRestaurants().includes(id);
   }

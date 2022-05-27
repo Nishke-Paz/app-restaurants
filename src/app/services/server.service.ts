@@ -3,9 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Restaurant} from "../components/main/main.component"
 
-@Injectable({
-  providedIn: "root"
-})
+@Injectable()
 export class ServerService{
   constructor(private http: HttpClient) {
   }

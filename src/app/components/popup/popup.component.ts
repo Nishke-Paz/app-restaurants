@@ -1,7 +1,5 @@
 import {
-  ApplicationRef,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -14,20 +12,18 @@ import {FavoritesRestaurantsService} from "../../services/favorites-restaurants.
   selector: "app-popup",
   templateUrl: "./popup.component.html",
   styleUrls: ["./popup.component.less"],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PopupComponent{
   @Input() currentRest?: Restaurant;
   @Input() isFavorites?: boolean;
   @Output() clickClose: EventEmitter<void> = new EventEmitter<void>();
   constructor(
-    private favoritesRestaurantsService: FavoritesRestaurantsService,
-    private applicationRef: ApplicationRef
+    private favoritesRestaurantsService: FavoritesRestaurantsService
   ) {
   }
   close(){
     this.clickClose.emit();
-    this.applicationRef.tick();
   }
   clickFavourites(){
     if (this.currentRest && this.isFavorites){
@@ -36,6 +32,5 @@ export class PopupComponent{
       this.favoritesRestaurantsService.addRestaurant(this.currentRest.Id);
     }
     this.isFavorites = !this.isFavorites;
-    this.applicationRef.tick();
   }
 }

@@ -1,11 +1,13 @@
 <div class="popup">
   <div class="popup__restaurant" *ngIf="currentRest">
     <span (click)="close()" class="popup__close">закрыть ×</span>
-    <h2>{{currentRest.name}}</h2>
-    <ng-container [ngSwitch]="isFavorites">
-      <div *ngSwitchCase="false" (click)="clickFavourites()" class="popup__favourites"></div>
-      <div *ngSwitchCase="true" (click)="clickFavourites()" class="popup__favourites-yellow"></div>
-    </ng-container>
+    <div class="popup__header">
+      <h2>{{currentRest.name}}</h2>
+      <ng-container [ngSwitch]="isFavorites">
+        <div *ngSwitchCase="false" (click)="clickFavourites()" class="popup__favourites"></div>
+        <div *ngSwitchCase="true" (click)="clickFavourites()" class="popup__favourites-yellow"></div>
+      </ng-container>
+    </div>
     <img [src]="'../assets/'+currentRest.name+'.jpeg'" class="popup__photo"/>
     <p><i>{{currentRest.description}} </i><br/> <br/>
       <b>адрес: </b>{{currentRest.address}}</p>

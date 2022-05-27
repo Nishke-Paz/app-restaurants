@@ -3,11 +3,12 @@
   <button routerLink="/" class="header__button">На главную</button>
 </div>
 <ng-container *ngIf="search">
-  <app-restaurants (eventClickToRest)="showRest($event)" [isAsync]="false" [data]="restaurants">
+  <app-restaurants [launchDetectionStrategy]="launchDetectionStrategy"
+                   (eventClickToRest)="showRest($event)" [isAsync]="false" [data]="restaurants">
   </app-restaurants>
 </ng-container>
 <ng-container *ngIf="showCurrentRest">
-  <app-popup [currentRest]="currentRest" (clickClose)="close()"></app-popup>
+  <app-popup [isFavorites]="currentRest && favoritesRestaurantsService.getRestaurants().includes(currentRest.Id)" [currentRest]="currentRest" (clickClose)="close()"></app-popup>
 </ng-container>
 
 

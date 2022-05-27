@@ -1,9 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Restaurant} from "../components/main/main.component";
 
-@Injectable({
-  providedIn: "root"
-})
+@Injectable()
 export class FavoritesRestaurantsService{
   public favoritesRestaurants: number[] = [];
   constructor() {
